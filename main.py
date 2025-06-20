@@ -17,6 +17,11 @@ def read_root():
     return {"hello": "world"}
 
 
+@app.get("/users/me")
+async def read_user_me():
+    return {"user_id": "the current user"}
+
+
 @app.get("/items/{item_id}")
 def read_item(item_id: int, q: Union[str, None] = None):
     return {"item_id": item_id, "q": q}
