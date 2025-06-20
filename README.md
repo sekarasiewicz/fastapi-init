@@ -34,7 +34,20 @@ This project is a basic FastAPI application structured for scalability and maint
     ```
 
 2.  Run the application:
+
+    You can run the application using either `uvicorn` or `fastapi-cli`.
+
+    **Using Uvicorn:**
     ```bash
     uvicorn app.main:app --reload
     ```
-The application will be available at `http://127.0.0.1:8000`. 
+
+    **Using FastAPI CLI:**
+    ```bash
+    fastapi dev app/main.py
+    ```
+The application will be available at `http://127.0.0.1:8000`.
+
+**Note on `__init__.py` files:**
+
+The empty `__init__.py` files in the directories are there to mark them as Python packages. This allows us to use absolute imports within the application (e.g., `from app.api.routers import items`). 
