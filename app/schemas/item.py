@@ -7,3 +7,5 @@ class Item(BaseModel):
     name: str
     price: float
     is_offer: Union[bool, None] = None
+    description: str | None = None
+    tax: float | None = None
