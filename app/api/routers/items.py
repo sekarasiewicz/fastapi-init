@@ -1,6 +1,6 @@
-from typing import Union
+from typing import Annotated, Union
 
-from fastapi import APIRouter
+from fastapi import APIRouter, Query
 
 from app.schemas.item import Item
 
@@ -19,9 +19,20 @@ def update_item(item_id: int, item: Item):
     return {"item_id": item_id, "item_name": item.name}
 
 
+# Initial implementation
+# @router.get("/items/")
+# async def read_items(skip: int = 0, limit: int = 10):
+#     return fake_items_db[skip : skip + limit]
+
+
 @router.get("/items/")
-async def read_items(skip: int = 0, limit: int = 10):
-    return fake_items_db[skip : skip + limit]
+async def read_items(
+    q: Annotated[str | None, Query(min_length=3, max_length=50)] = None,
+):
+    results = {"items": [{"item_id": "Foo"}, {"item_id": "Bar"}]}
+    if q:
+        results.update({"q": q})
+    return results
 
 
 @router.post("/items/")
