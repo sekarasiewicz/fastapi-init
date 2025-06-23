@@ -51,7 +51,9 @@ async def read_items(
     ] = None,
     id: Annotated[str | None, AfterValidator(check_valid_id)] = None,
 ):
-    results = {"items": [{"item_id": "Foo"}, {"item_id": "Bar"}]}
+    results: dict[str, str | list[dict[str, str]]] = {
+        "items": [{"item_id": "Foo"}, {"item_id": "Bar"}]
+    }
     if q:
         results.update({"q": q})
         return results
