@@ -4,7 +4,7 @@ from typing import Annotated, Union
 from fastapi import APIRouter, Query
 from pydantic import AfterValidator
 
-from app.schemas.item import Item
+from app.schemas.item import FilterParams, Item
 
 router = APIRouter()
 
@@ -26,18 +26,25 @@ def update_item(item_id: int, item: Item):
     return {"item_id": item_id, "item_name": item.name}
 
 
-# Initial implementation
-# @router.get("/items/")
-# async def read_items(skip: int = 0, limit: int = 10):
-#     return fake_items_db[skip : skip + limit]
-
-
 def check_valid_id(id: str):
     if not id.startswith(("isbn-", "imdb-")):
         raise ValueError('Invalid ID format, it must start with "isbn-" or "imdb-"')
     return id
 
 
+# Default values
+@router.get("/items3/")
+async def read_items3(skip: int = 0, limit: int = 10):
+    return fake_items_db[skip : skip + limit]
+
+
+# Query parameters with filters
+@router.get("/items2/")
+async def read_items2(filter_query: Annotated[FilterParams, Query()]):
+    return filter_query
+
+
+# Query parameters with validators
 @router.get("/items/")
 async def read_items(
     q: Annotated[
